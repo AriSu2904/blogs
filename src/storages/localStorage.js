@@ -5,3 +5,4 @@ export const getData = (key) => {
 export const setData = (key, value) => {
     localStorage.setItem(key, value);
 }
+
