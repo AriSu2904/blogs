@@ -19,9 +19,12 @@ export const Login = () => {
 
     const handleLogin = async (credentials) => {
         const userData = await loginUser({ variables: { ...credentials } });
-        setData('username', userData.data.loginUser.username);
-        setData('token',  userData.data.loginUser.token);
-        navigate('/dashboard');
+        if(userData.data.loginUser.token) {
+            setData('username', userData.data.loginUser.username);
+            setData('token',  userData.data.loginUser.token);
+            navigate('/dashboard');
+        }
+        alert('Please verify your email!');
     }
 
     return (
