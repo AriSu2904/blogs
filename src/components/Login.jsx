@@ -1,8 +1,6 @@
-import * as React from 'react';
 import {useMutation} from "@apollo/client";
 import {LOGIN_USER} from "../graphql/mutations/mutations.js";
 import {setData} from "../storages/localStorage.js";
-import {setCookie} from "../storages/cookieStorage.js";
 import {useNavigate} from "react-router-dom";
 
 export const Login = () => {
@@ -20,14 +18,10 @@ export const Login = () => {
     }
 
     const handleLogin = async (credentials) => {
-        try {
-            const userData = await loginUser({ variables: { ...credentials } });
-            setData('username', userData.data.loginUser.username);
-            setData('token',  userData.data.loginUser.token);
-            navigate('/dashboard');
-        }catch (e) {
-            throw e;
-        }
+        const userData = await loginUser({ variables: { ...credentials } });
+        setData('username', userData.data.loginUser.username);
+        setData('token',  userData.data.loginUser.token);
+        navigate('/dashboard');
     }
 
     return (
@@ -66,9 +60,13 @@ export const Login = () => {
                         </div>
                         <div className="mt-8 flex flex-col gap-y-4">
                             <button type="submit"
-                                    className="py-3 rounded-xl hover:bg-violet-900 text-white text-lg font-bold bg-violet-500">Sign
-                                in
+                                    className="py-3 rounded-xl hover:bg-violet-900 text-white text-lg font-bold bg-violet-500">Login
                             </button>
+                            <p className="text-sm text-center">do not have an account? </p>
+                        </div>
+                        <div className="mt-3 flex items-center justify-end">
+                            <button onClick={() => navigate('/register')}
+                                type="button" className="text-sm text-blue-500 font-bold hover:text-blue-700 active:text-blue-900">Register Now!</button>
                         </div>
                     </form>
                 </div>
