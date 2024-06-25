@@ -9,8 +9,9 @@ export const App = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<VerifyEmail/>}/>
+                <Route path="/" element={<Login/>}/>
                 <Route path="/register" element={<Register />} />
+                <Route path="verify-email" element={<VerifyEmail /> } />
                 <Route path="/dashboard"
                        element={
                            <ProtectedRoute>

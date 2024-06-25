@@ -30,3 +30,21 @@ export const REGISTER_USER = gql`
         }
     }
 `
+
+export const REQUEST_OTP = gql`
+    mutation OtpRequest ($email: String!) {
+        oneTimePassword(email: $email) {
+            status
+            message
+        }
+    }
+`
+
+export const VERIFY_OTP = gql`
+    mutation VerifyOTP ($email: String!, $otp: String!) {
+        verifyOTP (otpInput: { email: $email, otp: $otp }) {
+            status
+            message
+        }
+    }
+`

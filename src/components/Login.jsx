@@ -1,13 +1,15 @@
 import {useMutation} from "@apollo/client";
 import {LOGIN_USER} from "../graphql/mutations/mutations.js";
-import {setData} from "../storages/localStorage.js";
+import {setData, setEmail} from "../storages/localStorage.js";
 import {useNavigate} from "react-router-dom";
+import {useState} from "react";
 
 export const Login = () => {
     let username;
     let password;
     const [loginUser, {loading, error, reset}] = useMutation(LOGIN_USER);
     const navigate = useNavigate();
+    const [currentEmail, setCurrentEmail] = useState(null);
 
     if(loading) {
         return 'Loading';
@@ -18,13 +20,17 @@ export const Login = () => {
     }
 
     const handleLogin = async (credentials) => {
+        setData('email', credentials.username);
         const userData = await loginUser({ variables: { ...credentials } });
+
         if(userData.data.loginUser.token) {
             setData('username', userData.data.loginUser.username);
             setData('token',  userData.data.loginUser.token);
             navigate('/dashboard');
+        }else {
+            console.log(currentEmail);
+            navigate('/verify-email');
         }
-        alert('Please verify your email!');
     }
 
     return (
